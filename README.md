@@ -4,7 +4,7 @@ This project is an implementation of a simple feedforward neural network trained
 
 ## Features
 - Implements **Stochastic Gradient Descent (SGD)** with backpropagation.
-- Uses **sigmoid activation** and supports **L2 regularization**.
+- Uses **ReLU activation and Softmax activation** and supports **L2 regularization**.
 - Trains on the **MNIST dataset** (handwritten digits recognition).
 - Runs with only **NumPy** for computations and **TensorFlow** for dataset loading.
 
