@@ -18,5 +18,7 @@ test_labels = one_hot_encode(test_labels)
 training_data = list(zip(train_images, train_labels))
 test_data = list(zip(test_images, test_labels))
 
-net = Network([784, 128, 64, 10])  # Deeper architecture
+net = Network([784, 128, 64, 10],0.1)  # Deeper architecture
 net.SGD(training_data, epochs=15, mini_batch_size=64, eta=0.1, test_data=test_data)
+
+net.save("model.pk1")
