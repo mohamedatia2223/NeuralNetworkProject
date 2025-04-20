@@ -1,11 +1,12 @@
 import numpy as np
+import pickle
 
 class Network:
-    def __init__(self, sizes, lambda_=0.0):
+    def __init__(self, sizes, lambda_):
         self.num_layers = len(sizes)
         self.sizes = sizes
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        self.weights = [np.random.randn(y, x)*np.sqrt(2.0/x)  # Proper He initialization
+        self.weights = [np.random.randn(y, x)*np.sqrt(2.0/x) 
                for x, y in zip(sizes[:-1], sizes[1:])]
         self.lambda_ = lambda_ 
         self.activation_func  = relu
@@ -47,8 +48,7 @@ class Network:
             delta_nabla_b, delta_nabla_w = self.backprop(x, y)
             nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
             nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
-        
-        # Apply updates with L2 regularization
+
         self.weights = [(1-eta*self.lambda_/len(mini_batch))*w - (eta/len(mini_batch))*nw
                        for w, nw in zip(self.weights, nabla_w)]
         self.biases = [b - (eta/len(mini_batch))*nb 
@@ -62,7 +62,7 @@ class Network:
         activation = x
         activations = [x]
         zs = []
-        for b, w in zip(self.biases, self.weights):  # Include all layers
+        for b, w in zip(self.biases, self.weights): 
             z = np.dot(w, activation) + b
             zs.append(z)
             if w is self.weights[-1]:
@@ -89,6 +89,26 @@ class Network:
         test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) 
                     for (x, y) in test_data]
         return sum(int(x == y) for (x, y) in test_results)
+    import pickle
+
+    def save(self, filename):
+        with open(filename, 'wb') as f:
+            pickle.dump({
+                'sizes': self.sizes,
+                'weights': self.weights,
+                'biases': self.biases,
+                'lambda_': self.lambda_
+            }, f)
+
+    @staticmethod
+    def load(filename):
+        with open(filename, 'rb') as f:
+            data = pickle.load(f)
+        net = Network(data['sizes'], data['lambda_'])
+        net.weights = data['weights']
+        net.biases = data['biases']
+        return net
+
 
 # Activation functions
 def sigmoid(z):
@@ -98,7 +118,6 @@ def sigmoid(z):
 def sigmoid_prime(z):
     s = sigmoid(z)
     return s * (1 - s)
-
 
 def relu(z):
     return np.maximum(0,z)
