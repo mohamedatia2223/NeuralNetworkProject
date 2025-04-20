@@ -31,8 +31,24 @@ python train.py
 ### 2️⃣ Evaluate on Test Data
 The script prints test accuracy at each epoch to track model performance.
 
+## Testing in Colab
+If you'd like to run a quick test of the model in a Google Colab environment, you can use the provided notebook `DigitRecognizerTest.ipynb`. This notebook allows you to test the trained model on custom images of handwritten digits.
+
+### How to Use:
+1. Click the **Open in Colab** button below to open the notebook directly in Colab.
+2. Upload an image of a handwritten digit when prompted.
+3. The notebook will predict the digit and display the result along with the image.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohamedatia2223/NeuralNetworkProject/blob/main/GoogleColab/DigitRecognizerTest.ipynb)
+
+---
+
 ## Acknowledgments
 This implementation is inspired by Michael Nielsen’s *Neural Networks and Deep Learning* book.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+This updated section explains how users can use the Colab notebook for testing and provides instructions for testing custom images. Let me know if you'd like further changes!
